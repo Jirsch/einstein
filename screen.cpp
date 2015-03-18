@@ -117,8 +117,9 @@ void Screen::hideMouse()
 
     if (mouseSave) {
         Uint16 uw=mouseSave->w,uh=mouseSave->h;
-        SDL_Rect src = { 0, 0, (Uint16)mouseSave->w, mouseSave->h };
-        SDL_Rect dst = { saveX, saveY, mouseSave->w, mouseSave->h };
+        Sint16 sx=saveX,sy=saveY;
+        SDL_Rect src = { 0, 0, uw, uh };
+        SDL_Rect dst = { sx, sy, uw, uh };
         if (src.w > 0) {
             SDL_BlitSurface(mouseSave, &src, screen, &dst);
             addRegionToUpdate(dst.x, dst.y, dst.w, dst.h);
@@ -142,8 +143,10 @@ void Screen::showMouse()
         SDL_GetMouseState(&x, &y);
         saveX = x;
         saveY = y;
-        SDL_Rect src = { 0, 0, mouseSave->w, mouseSave->h };
-        SDL_Rect dst = { x, y, mouseImage->w, mouseImage->h };
+        Sint16 sx=x,sy=y;
+        Uint16 uw=mouseSave->w,uh=mouseSave->h;
+        SDL_Rect src = { 0, 0, uw, uh };
+        SDL_Rect dst = { sx, sy, uw, uh };
         if (src.w > 0) {
             SDL_BlitSurface(screen, &dst, mouseSave, &src);
             SDL_BlitSurface(mouseImage, &src, screen, &dst);
@@ -212,7 +215,9 @@ void Screen::addRegionToUpdate(int x, int y, int w, int h)
         h = h + y;
         y = 0;
     }
-    SDL_Rect r = { x, y, w, h };
+    Sint16 sx=x,sy=y;
+    Uint16 uw=w,uh=h;
+    SDL_Rect r = { sx, sy, uw, uh };
     regions.push_back(r);
 }
 
@@ -256,8 +261,10 @@ void Screen::setPixel(int x, int y, int r, int g, int b)
 
 void Screen::draw(int x, int y, SDL_Surface *tile)
 {
-    SDL_Rect src = { 0, 0, tile->w, tile->h };
-    SDL_Rect dst = { x, y, tile->w, tile->h };
+    Uint16 uw=tile->w,uh=tile->h;
+    Sint16 sx=x,sy=y;
+    SDL_Rect src = { 0, 0, uw, uh };
+    SDL_Rect dst = { sx, sy, uw, uh };
     SDL_BlitSurface(tile, &src, screen, &dst);
 }
 
@@ -302,8 +309,10 @@ SDL_Surface* Screen::createSubimage(int x, int y, int width, int height)
             screen->format->Bmask, screen->format->Amask);
     if (! s)
         throw Exception(L"Error creating buffer surface");
-    SDL_Rect src = { x, y, width, height };
-    SDL_Rect dst = { 0, 0, width, height };
+    Sint16 sx=x,sy=y;
+    Uint16 uw=width,uh=height;
+    SDL_Rect src = { sx, sy, uw, uh};
+    SDL_Rect dst = { 0, 0, uw, uh};
     SDL_BlitSurface(screen, &src, s, &dst);
     return s;
 }

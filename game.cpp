@@ -141,7 +141,10 @@ void Watch::draw()
     int y = 24;
     int w, h;
     font->getSize(s, w, h);
-    SDL_Rect rect = { x-2, y-2, w+4, h+4 };
+
+    Sint16 nx=x-2,ny=y-2;
+    Uint16 nw=w+4,nh=h+4;
+    SDL_Rect rect = { nx, ny, nw, nh };
     SDL_FillRect(screen.getSurface(), &rect, 
             SDL_MapRGB(screen.getSurface()->format, 0, 0, 255));
     font->draw(x, y, 255,255,255, true, s);

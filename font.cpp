@@ -67,15 +67,20 @@ void Font::draw(SDL_Surface *s, int x, int y, int r, int g, int b,
     if (shadow) {
         SDL_Color color = { 1, 1, 1, 1 };
         SDL_Surface *surface = TTF_RenderUNICODE_Blended(font, str, color);
-        SDL_Rect src = { 0, 0, surface->w, surface->h };
-        SDL_Rect dst = { x+1, y+1, surface->w, surface->h };
+        Uint16 uw=surface->w,uh=surface->h;
+        Sint16 sx=x+1,sy=y+1;
+        SDL_Rect src = { 0, 0, uw, uh };
+        SDL_Rect dst = { sx, sy, uw, uh };
         SDL_BlitSurface(surface, &src, s, &dst);
         SDL_FreeSurface(surface);
     }
-    SDL_Color color = { r, g, b, 0 };
+    Uint8 ur=r,ug=g,ub=b;
+    SDL_Color color = { ur, ug, ub, 0 };
     SDL_Surface *surface = TTF_RenderUNICODE_Blended(font, str, color);
-    SDL_Rect src = { 0, 0, surface->w, surface->h };
-    SDL_Rect dst = { x, y, surface->w, surface->h };
+    Uint16 uw=surface->w,uh=surface->h;
+    Sint16 sx=x,sy=y;
+    SDL_Rect src = { 0, 0, uw, uh };
+    SDL_Rect dst = { sx, sy, uw, uh };
     SDL_BlitSurface(surface, &src, s, &dst);
     SDL_FreeSurface(surface);
 }

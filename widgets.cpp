@@ -36,10 +36,13 @@ Button::Button(int x, int y, int w, int h, Font *font,
     width = w;
     height = h;
 
+    Sint16 sx=x,sy=y;
+    Uint16 uw=width,uh=height;
+
     SDL_Surface *s = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h,
             24, 0x00FF0000, 0x0000FF00, 0x000000FF, 0/*0xFF000000*/);
-    SDL_Rect src = { x, y, width, height };
-    SDL_Rect dst = { 0, 0, width, height };
+    SDL_Rect src = { sx, sy, uw, uh};
+    SDL_Rect dst = { 0, 0, uw, uh};
     SDL_BlitSurface(screen.getSurface(), &src, s, &dst);
     
     int tW, tH;
@@ -117,8 +120,9 @@ Button::Button(int x, int y, int w, int h, Font *font,
             s->format->Bmask, s->format->Amask);
 
     SDL_Surface *tile = loadImage(bg);
-    SDL_Rect src = { 0, 0, tile->w, tile->h };
-    SDL_Rect dst = { 0, 0, tile->w, tile->h };
+    Uint16 uw=tile->w,uh=tile->h;
+    SDL_Rect src = { 0, 0, uw, uh };
+    SDL_Rect dst = { 0, 0, uw, uh };
     for (int j = 0; j < height; j += tile->h)
         for (int i = 0; i < width; i += tile->w) {
             dst.x = i;
@@ -436,8 +440,9 @@ Window::Window(int x, int y, int w, int h, const std::wstring &bg,
             s->format->Bmask, s->format->Amask);
 
     SDL_Surface *tile = loadImage(bg);
-    SDL_Rect src = { 0, 0, tile->w, tile->h };
-    SDL_Rect dst = { 0, 0, tile->w, tile->h };
+    Uint16 uw=tile->w,uh=tile->h;
+    SDL_Rect src = { 0, 0, uw, uh };
+    SDL_Rect dst = { 0, 0, uw, uh };
     for (int j = 0; j < height; j += tile->h)
         for (int i = 0; i < width; i += tile->w) {
             dst.x = i;
@@ -582,7 +587,9 @@ void InputField::draw()
 {
     Window::draw();
 
-    SDL_Rect rect = { ((Uint16)left+1), ((Uint16)top+1), ((Uint16)width-2), ((Uint16)height-2) };
+    Uint16 uw=width-2,uh=height-2;
+    Sint16 sl=left+1,st=top+1;
+    SDL_Rect rect = { sl, st, uw, uh };
     SDL_SetClipRect(screen.getSurface(), &rect);
     
     font->draw(left+1, top+1, red,green,blue, true, text);
@@ -721,8 +728,9 @@ Checkbox::Checkbox(int x, int y, int w, int h, Font *font,
             s->format->Bmask, s->format->Amask);
 
     SDL_Surface *tile = loadImage(bg);
-    SDL_Rect src = { 0, 0, tile->w, tile->h };
-    SDL_Rect dst = { 0, 0, tile->w, tile->h };
+    Uint16 tw=tile->w,th=tile->h;
+    SDL_Rect src = { 0, 0, tw, th };
+    SDL_Rect dst = { 0, 0, tw, th };
     for (int j = 0; j < height; j += tile->h)
         for (int i = 0; i < width; i += tile->w) {
             dst.x = i;
@@ -917,8 +925,9 @@ void Slider::createSlider(int size)
             s->format->Bmask, s->format->Amask);
 
     SDL_Surface *tile = loadImage(L"blue.bmp");
-    SDL_Rect src = { 0, 0, tile->w, tile->h };
-    SDL_Rect dst = { 0, 0, tile->w, tile->h };
+    Uint16 tw=tile->w,th=tile->h;
+    SDL_Rect src = { 0, 0, tw, th };
+    SDL_Rect dst = { 0, 0, tw, th };
     for (int j = 0; j < size; j += tile->h)
         for (int i = 0; i < size; i += tile->w) {
             dst.x = i;

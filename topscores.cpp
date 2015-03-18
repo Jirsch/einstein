@@ -121,8 +121,9 @@ ScoresWindow::ScoresWindow(int x, int y, TopScores *scores, int highlight):
         std::wstring s(toString(no) + L".");
         int w = entryFont.getWidth(s);
         int c = ((no - 1) == highlight) ? 0 : 255;
+        Sint16 sPos = pos-20;
         entryFont.draw(background, 30 - w, pos, 255,255,c, true, s);
-        SDL_Rect rect = { 40, ((Uint16)pos-20), 180, 40 };
+        SDL_Rect rect = { 40, sPos, 180, 40 };
         SDL_SetClipRect(background, &rect);
         entryFont.draw(background, 40, pos, 255,255,c, true, e.name);
         SDL_SetClipRect(background, NULL);
