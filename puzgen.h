@@ -4,6 +4,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 #include <iostream>
 #include "iconset.h"
 
@@ -59,6 +60,10 @@ class Rule
         virtual ShowOptions getShowOpts() { return SHOW_NOTHING; };
         virtual void draw(int x, int y, IconSet &iconSet, bool highlight) = 0;
         virtual void save(std::ostream &stream) = 0;
+        //lior
+        virtual std::string className()=0;
+        virtual std::vector<int> parameterList()=0;
+        //lior
 };
 
 

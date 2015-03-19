@@ -26,6 +26,10 @@ class NearRule: public Rule
         NearRule(std::istream &stream);
         virtual bool apply(Possibilities &pos);
         virtual std::wstring getAsText();
+        //lior
+        std:: string NearRule::  className();
+        std::vector<int> parameterList();
+        //lior
 
     private:
         bool applyToCol(Possibilities &pos, int col, int nearRow, int nearNum,
@@ -130,6 +134,23 @@ void NearRule::save(std::ostream &stream)
     writeInt(stream, thing2[1]);
 }
 
+//lior
+std:: string NearRule::  className()
+{
+	return "NearRule";
+}
+
+std::vector <int> NearRule:: parameterList()
+{
+	std::vector<int> param;
+	param.push_back(thing1[0]);
+	param.push_back(thing1[1]);
+	param.push_back(thing2[0]);
+	param.push_back(thing2[1]);
+	return param;
+
+}
+//lior
 
 class DirectionRule: public Rule
 {
@@ -142,6 +163,10 @@ class DirectionRule: public Rule
         DirectionRule(std::istream &stream);
         virtual bool apply(Possibilities &pos);
         virtual std::wstring getAsText();
+        //lior
+        std:: string NearRule::  className();
+        std::vector<int> parameterList();
+        //lior
 
     private:
         virtual void draw(int x, int y, IconSet &iconSet, bool highlighted);
@@ -217,6 +242,24 @@ void DirectionRule::save(std::ostream &stream)
 }
 
 
+//lior
+std:: string DirectionRule::  className()
+{
+	return "DirectionRule";
+}
+
+std::vector <int>DirectionRule:: parameterList()
+{
+	std::vector<int> param;
+	param.push_back(row1);
+	param.push_back(thing1);
+	param.push_back(row2);
+	param.push_back(thing2);
+	return param;
+
+}
+//lior
+
 class OpenRule: public Rule
 {
     private:
@@ -231,6 +274,10 @@ class OpenRule: public Rule
         virtual void draw(int x, int y, IconSet &iconSet, bool highlighted) { };
         virtual ShowOptions getShowOpts() { return SHOW_NOTHING; };
         virtual void save(std::ostream &stream);
+        //lior
+        std:: string NearRule::  className();
+        std::vector<int> parameterList();
+        //lior
 };
 
 
@@ -270,6 +317,24 @@ void OpenRule::save(std::ostream &stream)
     writeInt(stream, thing);
 }
 
+//lior
+std:: string OpenRule::  className()
+{
+	return "OpenRule";
+}
+
+std::vector <int> OpenRule:: parameterList()
+{
+	std::vector<int> param;
+	param.push_back(row);
+	param.push_back(col);
+	param.push_back(thing);
+
+	return param;
+
+}
+//lior
+
 
 class UnderRule: public Rule
 {
@@ -284,6 +349,10 @@ class UnderRule: public Rule
         virtual void draw(int x, int y, IconSet &iconSet, bool highlighted);
         virtual ShowOptions getShowOpts() { return SHOW_VERT; };
         virtual void save(std::ostream &stream);
+        //lior
+        std:: string NearRule::  className();
+        std::vector<int> parameterList();
+        //lior
 };
 
 
@@ -351,7 +420,24 @@ void UnderRule::save(std::ostream &stream)
     writeInt(stream, thing2);
 }
 
+//lior
+std:: string UnderRule::  className()
+{
+	return "UnderRule";
+}
 
+std::vector <int> UnderRule:: parameterList()
+{
+	std::vector<int> param;
+	param.push_back(row1);
+	param.push_back(thing1);
+	param.push_back(row2);
+	param.push_back(thing2);
+
+	return param;
+
+}
+//lior
 
 class BetweenRule: public Rule
 {
@@ -365,6 +451,10 @@ class BetweenRule: public Rule
         BetweenRule(std::istream &stream);
         virtual bool apply(Possibilities &pos);
         virtual std::wstring getAsText();
+        //lior
+        std:: string NearRule::  className();
+        std::vector<int> parameterList();
+        //lior
 
     private:
         virtual void draw(int x, int y, IconSet &iconSet, bool highlighted);
@@ -504,6 +594,26 @@ void BetweenRule::save(std::ostream &stream)
     writeInt(stream, centerThing);
 }
 
+//lior
+std:: string BetweenRule::  className()
+{
+	return "BetweenRule";
+}
+
+std::vector <int> BetweenRule:: parameterList()
+{
+	std::vector<int> param;
+	param.push_back(row1);
+	param.push_back(thing1);
+	param.push_back(row2);
+	param.push_back(thing2);
+	param.push_back(centerRow);
+	param.push_back(centerThing);
+
+	return param;
+
+}
+//lior
 
 
 Rule* genRule(SolvedPuzzle &puzzle)
