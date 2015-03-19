@@ -1,10 +1,11 @@
 /*
  * toolKit.cpp
  *
- *  Created on: 14 бошс 2015
+ *  Created on: 14 пїЅпїЅпїЅпїЅ 2015
  *      Author: Lior
  */
 
+#include <Tcl/tcl.h>
 #include "toolKit.h"
 
 #define SIZE_OF_BITSET 8
@@ -136,20 +137,18 @@ class Constraint
 	        things.push_back(thing2[1]);
 
 	        std::vector<int> temp;
-	        for (int first=0; first<ARR_SIZE;first++)
-	        {
-	        	for (int second=0; second<ARR_SIZE;second++)
-	        	{
-	        		if (abs(second-first)==1)
-	        		{
-	        			temp.push_back(first);
-	        			temp.push_back(second);
-	        			permutations.push_back(temp);
-	        			temp.clear();
-	        		}
+			for (int i=0;i<ARR_SIZE-1;++i)
+			{
+				temp.push_back(i);
+				temp.push_back(i+1);
+				permutations.push_back(temp);
+				temp.clear();
 
-	            }
-	         }
+				temp.push_back(i+1);
+				temp.push_back(i);
+				permutations.push_back(temp);
+				temp.clear();
+			}
 
 		}
 		else if (className=="DirectionRule")
@@ -167,15 +166,12 @@ class Constraint
 	        std::vector<int> temp;
 	        for (int first=0; first<ARR_SIZE;first++)
 	        {
-	        	for (int second=0; second<ARR_SIZE;second++)
+	        	for (int second=first+1; second<ARR_SIZE;second++)
 	        	{
-	        		if (first<second)
-	        		{
-	        			temp.push_back(first);
-	        			temp.push_back(second);
-	        			permutations.push_back(temp);
-	        			temp.clear();
-	        		}
+					temp.push_back(first);
+					temp.push_back(second);
+					permutations.push_back(temp);
+					temp.clear();
 
 	        	}
 	         }
@@ -235,28 +231,24 @@ class Constraint
 
 
 	        std::vector<int> temp;
-	        for (int first=0; first<ARR_SIZE;first++)
-	        {
-	        	for (int second=0; second<ARR_SIZE;second++)
-	        	{
-	        		for (int middle = 0 ; middle<ARR_SIZE;middle++)
-	        		{
-						if (abs(first-second)==2 && abs(first-middle)==1 && abs(second-middle)==1 )
-						{
-							temp.push_back(first);
-							temp.push_back(middle);
-							temp.push_back(second);
+			for (int middle=1;middle<ARR_SIZE-1;++middle)
+			{
+				temp.push_back(middle-1);
+				temp.push_back(middle);
+				temp.push_back(middle+1);
 
-							permutations.push_back(temp);
-							temp.clear();
-						}
-	        		}
-	        	}
-	         }
+				permutations.push_back(temp);
+				temp.clear();
 
+				temp.push_back(middle+1);
+				temp.push_back(middle);
+				temp.push_back(middle-1);
+
+				permutations.push_back(temp);
+				temp.clear();
+			}
 
 		}
-
 
 	}
 
@@ -312,15 +304,15 @@ class Constraint
 	bool Constraint::checkConstraintHoldsForSol(PartialSolution* sol)
 	{
 		bool temp;
-		for (int con=0;con<permutations;con++)
+		for (int con=0;con<permutations.size();con++)
 		{
 			temp = true;
 			for (int var=0; var<things.size();var++ )
 			{
 				temp=sol->getOptionForCell(rows[var],permutations[con][var],things[var]);
-				if (temp==false) break;
+				if (!temp) break;
 			}
-			if (temp==true) return true;
+			if (temp) return true;
 		}
 		return false;
 	}

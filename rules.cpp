@@ -27,7 +27,7 @@ class NearRule: public Rule
         virtual bool apply(Possibilities &pos);
         virtual std::wstring getAsText();
         //lior
-        std:: string NearRule::  className();
+        std::string className();
         std::vector<int> parameterList();
         //lior
 
@@ -135,12 +135,12 @@ void NearRule::save(std::ostream &stream)
 }
 
 //lior
-std:: string NearRule::  className()
+std::string NearRule::className()
 {
 	return "NearRule";
 }
 
-std::vector <int> NearRule:: parameterList()
+std::vector <int> NearRule::parameterList()
 {
 	std::vector<int> param;
 	param.push_back(thing1[0]);
@@ -164,7 +164,7 @@ class DirectionRule: public Rule
         virtual bool apply(Possibilities &pos);
         virtual std::wstring getAsText();
         //lior
-        std:: string NearRule::  className();
+        std::string className();
         std::vector<int> parameterList();
         //lior
 
@@ -275,7 +275,7 @@ class OpenRule: public Rule
         virtual ShowOptions getShowOpts() { return SHOW_NOTHING; };
         virtual void save(std::ostream &stream);
         //lior
-        std:: string NearRule::  className();
+        std::string className();
         std::vector<int> parameterList();
         //lior
 };
@@ -350,7 +350,7 @@ class UnderRule: public Rule
         virtual ShowOptions getShowOpts() { return SHOW_VERT; };
         virtual void save(std::ostream &stream);
         //lior
-        std:: string NearRule::  className();
+        std::string className();
         std::vector<int> parameterList();
         //lior
 };
@@ -452,7 +452,7 @@ class BetweenRule: public Rule
         virtual bool apply(Possibilities &pos);
         virtual std::wstring getAsText();
         //lior
-        std:: string NearRule::  className();
+        std::string className();
         std::vector<int> parameterList();
         //lior
 
