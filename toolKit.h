@@ -1,7 +1,7 @@
 /*
  * toolKit.h
  *
- *  Created on: 16 áîøñ 2015
+ *  Created on: 16 ï¿½ï¿½ï¿½ï¿½ 2015
  *      Author: Lior
  */
 
@@ -20,15 +20,15 @@ class PartialSolution
 	private:
 		std::bitset<SIZE_OF_BITSET> solArr[ARR_SIZE][ARR_SIZE];
 	public:
-		PartialSolution:: PartialSolution();
-		PartialSolution::PartialSolution(PartialSolution* part);
-		bool PartialSolution:: IsCellDecided(int row,int col);
-		void PartialSolution:: setDecisionBit(int row, int col,bool trueFalse);
-		bool PartialSolution::checkAllDecided();
-		bool PartialSolution::isOneOptionLeftForCell(int row,int col);
-		int PartialSolution::NumOFOptionsForCell(int row,int col);
-		bool PartialSolution::setOptionForCell(int row, int col, int option, bool trueFalse);
-		bool PartialSolution::getOptionForCell(int row, int col, int option);
+		PartialSolution();
+		PartialSolution(PartialSolution *part);
+		bool IsCellDecided(int row,int col);
+		void setDecisionBit(int row, int col,bool trueFalse);
+		bool checkAllDecided();
+		bool isOneOptionLeftForCell(int row,int col);
+		int NumOFOptionsForCell(int row,int col);
+		bool setOptionForCell(int row, int col, int option, bool trueFalse);
+		bool getOptionForCell(int row, int col, int option);
 
 
 };
@@ -40,31 +40,23 @@ class Constraint
 		std::vector<int> things;
 		std::vector<std::vector<int> > permutations;
 	public:
-		Constraint::Constraint(Rule *rule);
-		void Constraint::print();
-		bool Constraint::isVarPresent(int row,int thing);
-		int Constraint::checkNumOfVars();
-		bool Constraint::checkConstraintHoldsForSol(PartialSolution* sol);
+		Constraint(Rule *rule);
+		void print();
+		bool isVarPresent(int row,int thing);
+		int checkNumOfVars();
+		bool checkConstraintHoldsForSol(PartialSolution* sol);
 
 };
 
 class AllConstraints
 {
 	private:
-	std::vector<Constraint> all;
+		std::vector<Constraint> all;
 	public:
-	AllConstraints::AllConstraints(Rules rules);
-	std::vector<Constraint> AllConstraints::returnReleventConstraints(int row,int thing);
-	bool AllConstraints::checkSolKeepsAllConstraints(PartialSolution* sol);
+		AllConstraints(Rules rules);
+		std::vector<Constraint> returnReleventConstraints(int row,int thing);
+		bool checkSolKeepsAllConstraints(PartialSolution* sol);
 
 };
-
-
-
-
-
-
-
-
 
 #endif /* TOOLKIT_H_ */
