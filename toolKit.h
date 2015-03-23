@@ -22,13 +22,17 @@ class PartialSolution
 	public:
 		PartialSolution();
 		PartialSolution(PartialSolution *part);
-		bool IsCellDecided(int row,int col);
+		bool isCellDecided(int row, int col);
+		bool isOptionDecided(int row, int option);
 		void setDecisionBit(int row, int col,bool trueFalse);
-		bool checkAllDecided();
+		bool allDecided();
 		bool isOneOptionLeftForCell(int row,int col);
+		int getFirstCellForOption(int row, int option);
+		int numOfCellsForOption(int row, int option);
 		int NumOFOptionsForCell(int row,int col);
-		bool setOptionForCell(int row, int col, int option, bool trueFalse);
+		bool setOptionForCell(int row, int col, int option, bool value);
 		bool getOptionForCell(int row, int col, int option);
+		void chooseOptionForCell(int row, int col, int option);
 
 
 };
@@ -55,8 +59,9 @@ class AllConstraints
 	public:
 		AllConstraints(Rules rules);
 		std::vector<Constraint> returnReleventConstraints(int row,int thing);
-		bool checkSolKeepsAllConstraints(PartialSolution* sol);
+		bool isSolValid(PartialSolution *sol);
 
 };
 
 #endif /* TOOLKIT_H_ */
+

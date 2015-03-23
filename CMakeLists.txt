@@ -12,6 +12,7 @@ set(SOURCE_FILES
     convert.h
     descr.cpp
     descr.h
+    einstein.res
     exceptions.h
     font.cpp
     font.h
@@ -61,6 +62,8 @@ set(SOURCE_FILES
     tablestorage.h
     tokenizer.cpp
     tokenizer.h
+    toolKit.cpp
+    toolKit.h
     topscores.cpp
     topscores.h
     unicode.cpp
@@ -73,4 +76,12 @@ set(SOURCE_FILES
     widgets.cpp
     widgets.h)
 
-add_executable(einstein ${SOURCE_FILES})
+ FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+
+ link_libraries( sdl sdl_mixer sdl_ttf SDLmain z ${COCOA_LIBRARY})
+
+
+add_executable(einstein ${SOURCE_FILES} CspSolver.cpp CspSolver.h)
+
+SET( FOO_LINKFLAGS ${CMAKE_CURRENT_SOURCE_DIR}/einstein.res )
+SET_TARGET_PROPERTIES( einstein PROPERTIES LINK_FLAGS ${FOO_LINKFLAGS} )

@@ -15,6 +15,7 @@
 #include "messages.h"
 #include "sound.h"
 #include "descr.h"
+#include "CspSolver.h"
 
 
 
@@ -568,12 +569,14 @@ void Game::run()
     BUTTON(226, 440, L"help", &helpCmd)
     area.add(watch, false);
 
+    CspSolver csp(rules);
+    PartialSolution* sol= csp.backtrack();
+
     pthread_t thread;
-    pthread_create(&thread,NULL,clickme,this);
-    std::cout << "!";
+    //pthread_create(&thread,NULL,clickme,this);
     watch->start();
     area.run();
-    std::cout << "!";
+    delete sol;
 }
 
 void* Game::clickme(void* arg){
@@ -595,7 +598,7 @@ void* Game::clickme(void* arg){
     SDL_PushEvent(&event);
 
     event.type=SDL_MOUSEBUTTONUP;
-    SDL_PushEvent(&event);
+    //SDL_PushEvent(&event);
 
     pthread_exit(NULL);
 }
