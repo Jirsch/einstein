@@ -28,6 +28,7 @@ class PartialSolution
 		bool allDecided();
 		bool isOneOptionLeftForCell(int row,int col);
 		int getFirstCellForOption(int row, int option);
+		int getFirstOptionForCell(int row, int col);
 		int numOfCellsForOption(int row, int option);
 		int NumOFOptionsForCell(int row,int col);
 		bool setOptionForCell(int row, int col, int option, bool value);
@@ -45,6 +46,7 @@ class Constraint
 		std::vector<std::vector<int> > permutations;
 	public:
 		Constraint(Rule *rule);
+//		Constraint(int row);
 		void print();
 		bool isVarPresent(int row,int thing);
 		int checkNumOfVars();

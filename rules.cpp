@@ -144,9 +144,9 @@ std::vector <int> NearRule::parameterList()
 {
 	std::vector<int> param;
 	param.push_back(thing1[0]);
-	param.push_back(thing1[1]);
+	param.push_back(thing1[1]-1);
 	param.push_back(thing2[0]);
-	param.push_back(thing2[1]);
+	param.push_back(thing2[1]-1);
 	return param;
 
 }
@@ -252,9 +252,9 @@ std::vector <int>DirectionRule:: parameterList()
 {
 	std::vector<int> param;
 	param.push_back(row1);
-	param.push_back(thing1);
+	param.push_back(thing1-1);
 	param.push_back(row2);
-	param.push_back(thing2);
+	param.push_back(thing2-1);
 	return param;
 
 }
@@ -328,7 +328,7 @@ std::vector <int> OpenRule:: parameterList()
 	std::vector<int> param;
 	param.push_back(row);
 	param.push_back(col);
-	param.push_back(thing);
+	param.push_back(thing-1);
 
 	return param;
 
@@ -430,9 +430,9 @@ std::vector <int> UnderRule:: parameterList()
 {
 	std::vector<int> param;
 	param.push_back(row1);
-	param.push_back(thing1);
+	param.push_back(thing1-1);
 	param.push_back(row2);
-	param.push_back(thing2);
+	param.push_back(thing2-1);
 
 	return param;
 
@@ -604,11 +604,11 @@ std::vector <int> BetweenRule:: parameterList()
 {
 	std::vector<int> param;
 	param.push_back(row1);
-	param.push_back(thing1);
+	param.push_back(thing1-1);
 	param.push_back(row2);
-	param.push_back(thing2);
+	param.push_back(thing2-1);
 	param.push_back(centerRow);
-	param.push_back(centerThing);
+	param.push_back(centerThing-1);
 
 	return param;
 

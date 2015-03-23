@@ -109,6 +109,18 @@ int PartialSolution::getFirstCellForOption(int row, int option)
     return -1;
 }
 
+int PartialSolution::getFirstOptionForCell(int row, int col)
+{
+    for (int option=0;option<ARR_SIZE;++option)
+    {
+        if (solArr[row][col][option])
+        {
+            return option;
+        }
+    }
+    return -1;
+}
+
 int PartialSolution::numOfCellsForOption(int row, int option)
 {
     int count = 0;
@@ -123,6 +135,7 @@ int PartialSolution::numOfCellsForOption(int row, int option)
     return count;
 }
 
+
 int PartialSolution::NumOFOptionsForCell(int row, int col)
 {
     int count = 0;
@@ -136,7 +149,6 @@ int PartialSolution::NumOFOptionsForCell(int row, int col)
     return count;
 }
 
-
 bool PartialSolution::setOptionForCell(int row, int col, int option, bool value)
 {
     if ((option > 5) || (option < 0))
@@ -148,13 +160,13 @@ bool PartialSolution::setOptionForCell(int row, int col, int option, bool value)
     return true;
 }
 
+
 bool PartialSolution::getOptionForCell(int row, int col, int option)
 {
     //if ((option>5) || (option <0)) return false;
     //TODO throw exception? im lazy. lets not call this with a bad option ok? ok
     return solArr[row][col][option];
 }
-
 
 Constraint::Constraint(Rule *rule)
 {
@@ -298,6 +310,72 @@ Constraint::Constraint(Rule *rule)
 
 }
 
+//Constraint::Constraint(int row)
+//{
+//    std::vector<int> temp;
+//    for (int a=0;a<ARR_SIZE;++a)
+//    {
+//        // init here to save another loop
+//        rows.push_back(row);
+//        things.push_back(a);
+//
+//        temp.push_back(a);
+//
+//        for (int b = 0; b < ARR_SIZE; ++b)
+//        {
+//            if (b!=a)
+//            {
+//                temp.push_back(b);
+//
+//                for (int c = 0; c < ARR_SIZE; ++c)
+//                {
+//                    if (c != a && c != b)
+//                    {
+//                        temp.push_back(c);
+//
+//                        for (int d = 0; d < ARR_SIZE; ++d)
+//                        {
+//                            if (d != a && d != b && d != c)
+//                            {
+//                                temp.push_back(d);
+//
+//                                for (int e = 0; e < ARR_SIZE; ++e)
+//                                {
+//                                    if (e != a && e != b && e != c && e != d)
+//                                    {
+//                                        temp.push_back(e);
+//
+//                                        for (int f = 0; f < ARR_SIZE; ++f)
+//                                        {
+//                                            if (f != a && f != b && f != c && f != d && f != e)
+//                                            {
+//                                                temp.push_back(f);
+//                                                permutations.push_back(temp);
+//                                                temp.pop_back();
+//                                                break;
+//                                            }
+//                                        }
+//
+//                                        temp.pop_back();
+//                                    }
+//                                }
+//
+//                                temp.pop_back();
+//                            }
+//                        }
+//
+//                        temp.pop_back();
+//                    }
+//                }
+//
+//                temp.pop_back();
+//            }
+//        }
+//
+//        temp.pop_back();
+//    }
+//}
+
 //for testing
 void Constraint::print()
 {
@@ -363,6 +441,7 @@ bool Constraint::checkConstraintHoldsForSol(PartialSolution *sol)
     return false;
 }
 
+
 //constructor-given all the rules, a set of constraints is created
 AllConstraints::AllConstraints(Rules rules)
 {
@@ -371,7 +450,13 @@ AllConstraints::AllConstraints(Rules rules)
         all.push_back(Constraint(*it));
     }
 
+//    for (int row=0;row<ARR_SIZE;++row)
+//    {
+//        all.push_back(Constraint(row));
+//    }
+
 }
+
 
 //TODO think if we need to use pointers here? would it be more space and time saving
 std::vector<Constraint> AllConstraints::returnReleventConstraints(int row, int thing)
@@ -387,7 +472,6 @@ std::vector<Constraint> AllConstraints::returnReleventConstraints(int row, int t
     return releventConstraints;
 }
 
-
 //loops over all constraints and checks if solArr is a good solution
 bool AllConstraints::isSolValid(PartialSolution *sol)
 {
@@ -400,6 +484,3 @@ bool AllConstraints::isSolValid(PartialSolution *sol)
     }
     return true;
 }
-
-
-

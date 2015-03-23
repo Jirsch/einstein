@@ -573,7 +573,7 @@ void Game::run()
     PartialSolution* sol= csp.backtrack();
 
     pthread_t thread;
-    //pthread_create(&thread,NULL,clickme,this);
+    pthread_create(&thread,NULL,clickme,sol);
     watch->start();
     area.run();
     delete sol;
@@ -582,6 +582,7 @@ void Game::run()
 void* Game::clickme(void* arg){
 
     sleep(2);
+    PartialSolution* sol = (PartialSolution*)arg;
 
     int FIELD_OFFSET_X   = 12;
     int FIELD_OFFSET_Y   = 68;
@@ -590,15 +591,25 @@ void* Game::clickme(void* arg){
     int FIELD_TILE_WIDTH = 48;
     int FIELD_TILE_HEIGHT= 48;
 
+    int option;
     SDL_Event event;
-    event.type=SDL_MOUSEBUTTONDOWN;
-    event.button.button=1;
-    event.button.x=FIELD_OFFSET_X+(FIELD_TILE_WIDTH+FIELD_GAP_X)*0+1;
-    event.button.y=FIELD_OFFSET_Y+(FIELD_TILE_HEIGHT+FIELD_GAP_Y)*0+(FIELD_TILE_HEIGHT / 6)+1;
-    SDL_PushEvent(&event);
+    for (int row=0;row<ARR_SIZE;++row)
+    {
+        for (int col=0;col<ARR_SIZE;++col)
+        {
+            option= sol->getFirstOptionForCell(row,col);
 
-    event.type=SDL_MOUSEBUTTONUP;
-    //SDL_PushEvent(&event);
+            event.type=SDL_MOUSEBUTTONDOWN;
+            event.button.button=1;
+            event.button.x=FIELD_OFFSET_X+(FIELD_TILE_WIDTH+FIELD_GAP_X)*col+(FIELD_TILE_WIDTH/3)*(option%3);
+            event.button.y=FIELD_OFFSET_Y+(FIELD_TILE_HEIGHT+FIELD_GAP_Y)*row+(FIELD_TILE_HEIGHT / 6)+(FIELD_TILE_HEIGHT/3)*(option/3);
+            SDL_PushEvent(&event);
+
+            event.type=SDL_MOUSEBUTTONUP;
+            SDL_PushEvent(&event);
+        }
+    }
+
 
     pthread_exit(NULL);
 }
