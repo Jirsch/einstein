@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 #ifndef WIN32
     ensureDirExists(fromMbcs(getenv("HOME")) + std::wstring(L"/.einstein"));
 #endif
-    
+
     try {
         loadResources(fromUtf8(argv[0]));
         initScreen();

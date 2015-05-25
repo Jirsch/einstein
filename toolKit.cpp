@@ -59,7 +59,7 @@ void PartialSolution::setDecisionBit(int row, int col, bool trueFalse)
     solArr[row][col].set(DECISION_BIT, trueFalse);
 }
 
-void PartialSolution::chooseOptionForCell(int row, int col, int option)
+void PartialSolution::chooseOptionForCell(int row, int col, int option, bool useForwardChecking)
 {
     setDecisionBit(row,col,true);
     for (int other=0;other<ARR_SIZE;++other)
@@ -68,11 +68,14 @@ void PartialSolution::chooseOptionForCell(int row, int col, int option)
             setOptionForCell(row, col, other, false);
         }
     }
-    for (int other=0;other<ARR_SIZE;++other)
+    if (useForwardChecking)
     {
-        if (other!=col)
+        for (int other = 0; other < ARR_SIZE; ++other)
         {
-            setOptionForCell(row,other,option, false);
+            if (other != col)
+            {
+                setOptionForCell(row, other, option, false);
+            }
         }
     }
 }
@@ -310,71 +313,71 @@ Constraint::Constraint(Rule *rule)
 
 }
 
-//Constraint::Constraint(int row)
-//{
-//    std::vector<int> temp;
-//    for (int a=0;a<ARR_SIZE;++a)
-//    {
-//        // init here to save another loop
-//        rows.push_back(row);
-//        things.push_back(a);
-//
-//        temp.push_back(a);
-//
-//        for (int b = 0; b < ARR_SIZE; ++b)
-//        {
-//            if (b!=a)
-//            {
-//                temp.push_back(b);
-//
-//                for (int c = 0; c < ARR_SIZE; ++c)
-//                {
-//                    if (c != a && c != b)
-//                    {
-//                        temp.push_back(c);
-//
-//                        for (int d = 0; d < ARR_SIZE; ++d)
-//                        {
-//                            if (d != a && d != b && d != c)
-//                            {
-//                                temp.push_back(d);
-//
-//                                for (int e = 0; e < ARR_SIZE; ++e)
-//                                {
-//                                    if (e != a && e != b && e != c && e != d)
-//                                    {
-//                                        temp.push_back(e);
-//
-//                                        for (int f = 0; f < ARR_SIZE; ++f)
-//                                        {
-//                                            if (f != a && f != b && f != c && f != d && f != e)
-//                                            {
-//                                                temp.push_back(f);
-//                                                permutations.push_back(temp);
-//                                                temp.pop_back();
-//                                                break;
-//                                            }
-//                                        }
-//
-//                                        temp.pop_back();
-//                                    }
-//                                }
-//
-//                                temp.pop_back();
-//                            }
-//                        }
-//
-//                        temp.pop_back();
-//                    }
-//                }
-//
-//                temp.pop_back();
-//            }
-//        }
-//
-//        temp.pop_back();
-//    }
-//}
+Constraint::Constraint(int row)
+{
+    std::vector<int> temp;
+    for (int a=0;a<ARR_SIZE;++a)
+    {
+        // init here to save another loop
+        rows.push_back(row);
+        things.push_back(a);
+
+        temp.push_back(a);
+
+        for (int b = 0; b < ARR_SIZE; ++b)
+        {
+            if (b!=a)
+            {
+                temp.push_back(b);
+
+                for (int c = 0; c < ARR_SIZE; ++c)
+                {
+                    if (c != a && c != b)
+                    {
+                        temp.push_back(c);
+
+                        for (int d = 0; d < ARR_SIZE; ++d)
+                        {
+                            if (d != a && d != b && d != c)
+                            {
+                                temp.push_back(d);
+
+                                for (int e = 0; e < ARR_SIZE; ++e)
+                                {
+                                    if (e != a && e != b && e != c && e != d)
+                                    {
+                                        temp.push_back(e);
+
+                                        for (int f = 0; f < ARR_SIZE; ++f)
+                                        {
+                                            if (f != a && f != b && f != c && f != d && f != e)
+                                            {
+                                                temp.push_back(f);
+                                                permutations.push_back(temp);
+                                                temp.pop_back();
+                                                break;
+                                            }
+                                        }
+
+                                        temp.pop_back();
+                                    }
+                                }
+
+                                temp.pop_back();
+                            }
+                        }
+
+                        temp.pop_back();
+                    }
+                }
+
+                temp.pop_back();
+            }
+        }
+
+        temp.pop_back();
+    }
+}
 
 //for testing
 void Constraint::print()

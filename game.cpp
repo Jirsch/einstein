@@ -222,12 +222,12 @@ class WinCommand: public Command
             TopScores scores;
             int score = watch->getElapsed() / 1000;
             int pos = -1;
-            if (! game->isHinted()) {
-                if ((! scores.isFull()) || (score < scores.getMaxScore())) {
-                    std::wstring name = enterNameDialog(gameArea);
-                    pos = scores.add(name, score);
-                }
-            }
+//            if (! game->isHinted()) {
+//                if ((! scores.isFull()) || (score < scores.getMaxScore())) {
+//                    std::wstring name = enterNameDialog(gameArea);
+//                    pos = scores.add(name, score);
+//                }
+//            }
             showScoresWindow(gameArea, &scores, pos);
             gameArea->finishEventLoop();
         };
@@ -494,16 +494,28 @@ void Game::genPuzzle()
     pleaseWait();
     
     int horRules, verRules;
-    do {
-        if (rules.size() > 0)
-            deleteRules();
-        ::genPuzzle(solvedPuzzle, rules);
-        getHintsQty(rules, verRules, horRules);
-    } while ((horRules > 24) || (verRules > 15));
+    PartialSolution* sol;
 
-    memcpy(savedSolvedPuzzle, solvedPuzzle, sizeof(solvedPuzzle));
-    savedRules = rules;
-    
+//    for (int i=1;i<=1000;++i)
+//    {
+        do
+        {
+            if (rules.size() > 0)
+                deleteRules();
+            ::genPuzzle(solvedPuzzle, rules);
+            getHintsQty(rules, verRules, horRules);
+        } while ((horRules > 24) || (verRules > 15));
+
+        memcpy(savedSolvedPuzzle, solvedPuzzle, sizeof(solvedPuzzle));
+        savedRules = rules;
+
+//        std::cout << i <<",";
+//        CspSolver solver = CspSolver(rules);
+//        sol= solver.backtrack();
+//        delete sol;
+
+//    }
+
     hinted = false;
 }
 
@@ -569,14 +581,17 @@ void Game::run()
     BUTTON(226, 440, L"help", &helpCmd)
     area.add(watch, false);
 
+
     CspSolver csp(rules);
-    PartialSolution* sol= csp.backtrack();
+
+    PartialSolution *sol = csp.backtrack();
 
     pthread_t thread;
-    pthread_create(&thread,NULL,clickme,sol);
+    pthread_create(&thread, NULL, clickme, sol);
+
     watch->start();
     area.run();
-    delete sol;
+
 }
 
 void* Game::clickme(void* arg){
@@ -607,10 +622,12 @@ void* Game::clickme(void* arg){
 
             event.type=SDL_MOUSEBUTTONUP;
             SDL_PushEvent(&event);
+
+            usleep(100000);
         }
     }
 
-
+    delete sol;
     pthread_exit(NULL);
 }
 

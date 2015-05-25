@@ -7,6 +7,7 @@
 
 #include "puzgen.h"
 #include "toolKit.h"
+#include <ctime>
 
 class CspSolver {
 private:
@@ -14,8 +15,9 @@ private:
     bool rBacktrack(PartialSolution &curr, PartialSolution &result);
     void chooseVariable(PartialSolution &sol, int &row, int &option);
     std::vector<int> chooseCol(PartialSolution &sol, int row, int option);
-
-
+    bool useVariableHeuristic;
+    bool useValueHeuristic;
+    bool useForwardChecking;
 public:
     CspSolver(Rules rules);
     PartialSolution * backtrack();
